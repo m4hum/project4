@@ -8,14 +8,15 @@ function App() {
   const [books, setBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchBooks();
-  }, []);
+  }, [searchTerm]);
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/books");
+      const response = await fetch(`http://127.0.0.1:5000/api/books?search=${searchTerm}`);
       if (response.ok) {
         const data = await response.json();
         setBooks(data.books);
@@ -49,6 +50,16 @@ function App() {
 
   return (
     <>
+      {/* Search Bar */}
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search books..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       {/* Use the CSVReader component to load the CSV file */}
       <CSVReader setBooks={setBooks} />
 
