@@ -12,11 +12,11 @@ function App() {
 
   useEffect(() => {
     fetchBooks();
-  }, [searchTerm]);
+  }, []);
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/books?search=${searchTerm}`);
+      const response = await fetch("http://127.0.0.1:5000/api/books");
       if (response.ok) {
         const data = await response.json();
         setBooks(data.books);
@@ -48,8 +48,13 @@ function App() {
     fetchBooks();
   };
 
+  const filteredBooks = books.filter(book =>
+    book.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
+      <h1>Library</h1>
       {/* Search Bar */}
       <div className="search-bar">
         <input
@@ -64,7 +69,7 @@ function App() {
       <CSVReader setBooks={setBooks} />
 
       {/* Book List Component */}
-      <BookList books={books} updateBook={openEditModal} updateCallback={onUpdate} />
+      <BookList books={filteredBooks} updateBook={openEditModal} updateCallback={onUpdate} />
 
       {/* Add New Book Button */}
       <button onClick={openCreateModal}>Add New Book</button>

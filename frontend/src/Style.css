@@ -1,12 +1,12 @@
 /* Root Variables for Consistent Styling */
 :root {
-  --primary-color: #4caf50;
-  --secondary-color: #333;
-  --background-color: #121212;
-  --card-background: #1e1e1e;
-  --text-color: #e0e0e0;
-  --accent-color: #61dafb;
-  --hover-color: #45a049;
+  --primary-color: #ff6f61;
+  --secondary-color: #2e2e2e;
+  --background-color: #f5f5f5;
+  --card-background: #ffffff;
+  --text-color: #333333;
+  --accent-color: #ffb74d;
+  --hover-color: #ff8a65;
   --font-family: 'Roboto', sans-serif;
 }
 
@@ -86,6 +86,7 @@ td {
 
 tr:hover td {
   background-color: var(--secondary-color);
+  color: #fff;
 }
 
 /* Modal Styles */
@@ -166,7 +167,7 @@ input:focus, textarea:focus {
   color: var(--text-color);
 }
 
-.search-bar input:focus {
+search-bar input:focus {
   outline: none;
   border-color: var(--primary-color);
 }
