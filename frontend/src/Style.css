@@ -1,7 +1,7 @@
 /* Root Variables for Consistent Styling */
 :root {
   --primary-color: #ff6f61;
-  --secondary-color: #2e2e2e;
+  --secondary-color: #c7674a8f;
   --background-color: #f5f5f5;
   --card-background: #ffffff;
   --text-color: #333333;
@@ -49,6 +49,30 @@ button {
 button:hover {
   background-color: var(--hover-color);
   transform: scale(1.05);
+}
+
+/* Filter Buttons Styles */
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+.filter-buttons button:hover {
+  background-color: var(--hover-color);
+  transform: scale(1.1);
 }
 
 /* Header */
@@ -120,7 +144,7 @@ tr:hover td {
   transition: color 0.3s;
 }
 
-.close:hover {
+close:hover {
   color: red;
 }
 
@@ -170,6 +194,17 @@ input:focus, textarea:focus {
 search-bar input:focus {
   outline: none;
   border-color: var(--primary-color);
+}
+
+/* Button Spacing */
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* Add New Book Button Spacing */
+.add-book-button {
+  margin-top: 20px;
 }
 
 /* Accessibility & Responsiveness */

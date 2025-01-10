@@ -43,8 +43,10 @@ const BookList = ({ books, updateBook, updateCallback }) => {
               <td>{book.description}</td>
               <td>{book.yearPublished}</td>
               <td>
-                <button onClick={() => updateBook(book)}>Update</button>
-                <button onClick={() => onDelete(book.id)}>Delete</button>
+                <div className="button-group">
+                  <button onClick={() => updateBook(book)}>Update</button>
+                  <button onClick={() => onDelete(book.id)}>Delete</button>
+                </div>
               </td>
             </tr>
           ))}

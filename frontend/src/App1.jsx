@@ -3,12 +3,16 @@ import BookList from "./BookList";
 import BookForm from "./BookForm";
 import CSVReader from "./CSVReader";
 import './Style.css';
+import Book from './models/Book';
+import Author from './models/Author';
+import Genre from './models/Genre';
 
 function App() {
   const [books, setBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     fetchBooks();
@@ -19,7 +23,15 @@ function App() {
       const response = await fetch("http://127.0.0.1:5000/api/books");
       if (response.ok) {
         const data = await response.json();
-        setBooks(data.books);
+        const books = data.books.map(book => new Book(
+          book.id,
+          book.title,
+          new Author(book.author.id, book.author.name),
+          new Genre(book.genre.id, book.genre.name),
+          book.yearPublished,
+          book.description
+        ));
+        setBooks(books);
       } else {
         console.error("Failed to fetch books");
       }
@@ -48,9 +60,18 @@ function App() {
     fetchBooks();
   };
 
-  const filteredBooks = books.filter(book =>
-    book.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredBooks = books
+    .filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .sort((a, b) => {
+      if (filter === "genre") {
+        return a.genre.name.localeCompare(b.genre.name);
+      } else if (filter === "year") {
+        return a.yearPublished - b.yearPublished;
+      } else if (filter === "author") {
+        return a.author.name.localeCompare(b.author.name);
+      }
+      return 0;
+    });
 
   return (
     <>
@@ -65,6 +86,13 @@ function App() {
         />
       </div>
 
+      {/* Filter Buttons */}
+      <div className="filter-buttons">
+        <button onClick={() => setFilter("genre")}>Genre</button>
+        <button onClick={() => setFilter("year")}>Year</button>
+        <button onClick={() => setFilter("author")}>Author</button>
+      </div>
+
       {/* Use the CSVReader component to load the CSV file */}
       <CSVReader setBooks={setBooks} />
 
@@ -72,7 +100,7 @@ function App() {
       <BookList books={filteredBooks} updateBook={openEditModal} updateCallback={onUpdate} />
 
       {/* Add New Book Button */}
-      <button onClick={openCreateModal}>Add New Book</button>
+      <button className="add-book-button" onClick={openCreateModal}>Add New Book</button>
 
       {/* Modal for Adding/Editing Books */}
       {isModalOpen && (
