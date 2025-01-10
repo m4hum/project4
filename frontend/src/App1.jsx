@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react";
 import BookList from "./BookList";
 import BookForm from "./BookForm";
+import CSVReader from "./CSVReader";
 import './Style.css';
 
 function App() {
   const [books, setBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState({});
-
-  useEffect(() => {
-    fetch('C:\Users\mahum\OneDrive\Documents\libraryproject\project4-1\books.csv')
-        .then(response => response.json())
-        .then(data => setBooks(data));
-  }, []);
 
   useEffect(() => {
     fetchBooks();
@@ -54,6 +49,9 @@ function App() {
 
   return (
     <>
+      {/* Use the CSVReader component to load the CSV file */}
+      <CSVReader setBooks={setBooks} />
+
       {/* Book List Component */}
       <BookList books={books} updateBook={openEditModal} updateCallback={onUpdate} />
 
