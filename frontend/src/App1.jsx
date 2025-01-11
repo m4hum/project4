@@ -11,9 +11,19 @@ function App() {
   const renderPage = () => {
     switch (page) {
       case "bookCollection":
-        return <BookCollection />;
+        return (
+          <>
+            <button className="back-button" onClick={() => setPage("main")}>Back</button>
+            <BookCollection />
+          </>
+        );
       case "dashboard":
-        return <Dashboard />;
+        return (
+          <>
+            <button className="back-button" onClick={() => setPage("main")}>Back</button>
+            <Dashboard />
+          </>
+        );
       default:
         return (
           <div className="main-page">

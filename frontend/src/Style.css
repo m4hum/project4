@@ -51,6 +51,11 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* Back Button */
+.back-button {
+  margin-bottom: 20px;
+}
+
 /* Header */
 h1, h2 {
   color: var(--accent-color);
