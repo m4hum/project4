@@ -18,14 +18,14 @@ function App() {
       const response = await fetch("http://127.0.0.1:5000/api/books");
       if (response.ok) {
         const data = await response.json();
-        const books = data.books.map(book => new Book(
-          book.id,
-          book.title,
-          new Author(book.author.id, book.author.name),
-          new Genre(book.genre.id, book.genre.name),
-          book.yearPublished,
-          book.description
-        ));
+        const books = data.books.map(book => ({
+          id: book.id,
+          title: book.title,
+          author: book.author,
+          genre: book.genre,
+          yearPublished: book.yearPublished,
+          description: book.description
+        }));
         setBooks(books);
       } else {
         console.error("Failed to fetch books");
@@ -69,13 +69,6 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </div>
-
-      {/* Filter Buttons */}
-      <div className="filter-buttons" style={{ display: 'none' }}>
-        <button onClick={() => setFilter("genre")}>Genre</button>
-        <button onClick={() => setFilter("year")}>Year</button>
-        <button onClick={() => setFilter("author")}>Author</button>
       </div>
 
       {/* Book List Component */}
