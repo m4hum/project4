@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import BookList from "./BookList";
 import BookForm from "./BookForm";
-import CSVReader from "./CSVReader";
 import './Style.css';
 
 function App() {
@@ -65,14 +64,11 @@ function App() {
         />
       </div>
 
-      {/* Use the CSVReader component to load the CSV file */}
-      <CSVReader setBooks={setBooks} />
-
       {/* Book List Component */}
       <BookList books={filteredBooks} updateBook={openEditModal} updateCallback={onUpdate} />
 
       {/* Add New Book Button */}
-      <button onClick={openCreateModal}>Add New Book</button>
+      <button className="add-book-button" onClick={openCreateModal}>Add New Book</button>
 
       {/* Modal for Adding/Editing Books */}
       {isModalOpen && (

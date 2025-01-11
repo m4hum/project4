@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from extensions import db
 from models import Book
-import csv
 
 book_routes = Blueprint("book_routes", __name__)
 
@@ -13,25 +12,15 @@ def get_books():
 
 @book_routes.route("/api/books", methods=["POST"])
 def create_book():
-    # Extract fields from the request JSON payload
     title = request.json.get("title")
     author = request.json.get("author")
     genre = request.json.get("genre")
     description = request.json.get("description")
     year_published = request.json.get("yearPublished")
 
-    # Check for required fields
     if not title or not author or not genre or not description or not year_published:
-        return (
-            jsonify(
-                {
-                    "message": "You must include a title, author, genre, description, and year_published"
-                }
-            ),
-            400,
-        )
+        return jsonify({"message": "All fields are required"}), 400
 
-    # Create a new Book object
     new_book = Book(
         title=title,
         author=author,
@@ -40,15 +29,12 @@ def create_book():
         year_published=year_published,
     )
     try:
-        # Add the new book to the database
         db.session.add(new_book)
         db.session.commit()
+        return jsonify({"message": "Book created successfully!"}), 201
     except Exception as e:
-        # Handle any database errors
         db.session.rollback()
         return jsonify({"message": str(e)}), 400
-
-    return jsonify({"message": "Book created successfully!"}), 201
 
 @book_routes.route("/api/books/<int:id>", methods=["DELETE"])
 def delete_book(id):
