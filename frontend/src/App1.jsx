@@ -18,6 +18,15 @@ function App() {
         return (
           <div className="main-page">
             <h1>Welcome</h1>
+            <iframe 
+              src="https://giphy.com/embed/Y0ynz2rzJh2Dkxlelp" 
+              width="100%" 
+              height="100%" 
+              style={{ position: 'absolute', top: 0, left: 0, zIndex: -2, opacity: 1 }} 
+              frameBorder="0" 
+              className="giphy-embed" 
+              allowFullScreen
+            ></iframe>
             <button onClick={() => setPage("bookCollection")}>Book Collection</button>
           </div>
         );

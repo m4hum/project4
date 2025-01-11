@@ -1,12 +1,12 @@
 /* Root Variables for Consistent Styling */
 :root {
-  --primary-color: #ff6f61;
-  --secondary-color: #c7674a8f;
-  --background-color: #f5f5f5;
-  --card-background: #ffffff;
-  --text-color: #333333;
-  --accent-color: #ffb74d;
-  --hover-color: #ff8a65;
+  --primary-color: #d4a373; /* Warm light color */
+  --secondary-color: #8b5e3c; /* Darker warm color */
+  --background-color: #2c2c2c; /* Dark background */
+  --card-background: #3e3e3e; /* Slightly lighter dark background */
+  --text-color: #e0e0e0; /* Light text color */
+  --accent-color: #ffb74d; /* Warm accent color */
+  --hover-color: #ff8a65; /* Hover color */
   --font-family: 'Roboto', sans-serif;
 }
 
@@ -25,6 +25,10 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+}
+
+.main-page {
+  background-color: transparent;
 }
 
 .container {
@@ -108,7 +112,7 @@ tr:hover td {
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: var(--card-background);
   padding: 20px;
   border-radius: 10px;
   width: 90%;
@@ -216,4 +220,11 @@ search-bar input:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--hover-color);
+}
+
+.chart-title {
+  font-size: 28px;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin: 40px 0 20px 0; /* Add spacing above and below the titles */
 }
