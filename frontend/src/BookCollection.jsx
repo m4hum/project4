@@ -109,9 +109,9 @@ function BookCollection() {
 
       {/* Bar Charts */}
       <div className="charts">
-        <BarChart data={getChartData('genre')} title="Books by Genre" />
-        <BarChart data={getChartData('author')} title="Books by Author" />
-        <BarChart data={getChartData('yearPublished')} title="Books by Year Published" />
+        <BarChart data={getChartData('genre')} title="Books by Genre for the Collection" />
+        <BarChart data={getChartData('author')} title="Books by Author for the Collection" />
+        <BarChart data={getChartData('yearPublished')} title="Books by Year Published for the Collection" />
       </div>
     </>
   );
