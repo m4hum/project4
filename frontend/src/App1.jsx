@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import BookList from "./BookList";
 import BookForm from "./BookForm";
+import BookCollection from "./BookCollection";
+import Dashboard from "./Dashboard"; 
 import './Style.css';
 
 function App() {
