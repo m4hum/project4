@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import BookList from "./BookList";
 import BookForm from "./BookForm";
+import BarChart from "./BarChart";
 import './Style.css';
 
 function BookCollection() {
@@ -58,6 +59,23 @@ function BookCollection() {
   const filteredBooks = books
     .filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
+  const getChartData = (key) => {
+    const data = books.reduce((acc, book) => {
+      acc[book[key]] = (acc[book[key]] || 0) + 1;
+      return acc;
+    }, {});
+    return {
+      labels: Object.keys(data),
+      datasets: [{
+        label: `Number of Books by ${key}`,
+        data: Object.values(data),
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    };
+  };
+
   return (
     <>
       <h1>Library</h1>
@@ -88,6 +106,13 @@ function BookCollection() {
           </div>
         </div>
       )}
+
+      {/* Bar Charts */}
+      <div className="charts">
+        <BarChart data={getChartData('genre')} title="Books by Genre" />
+        <BarChart data={getChartData('author')} title="Books by Author" />
+        <BarChart data={getChartData('yearPublished')} title="Books by Year Published" />
+      </div>
     </>
   );
 }
