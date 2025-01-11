@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react";
 import BookList from "./BookList";
 import BookForm from "./BookForm";
-import CSVReader from "./CSVReader";
 import './Style.css';
-import Book from './models/Book';
-import Author from './models/Author';
-import Genre from './models/Genre';
 
 function App() {
   const [books, setBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     fetchBooks();
@@ -61,17 +56,7 @@ function App() {
   };
 
   const filteredBooks = books
-    .filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()))
-    .sort((a, b) => {
-      if (filter === "genre") {
-        return a.genre.name.localeCompare(b.genre.name);
-      } else if (filter === "year") {
-        return a.yearPublished - b.yearPublished;
-      } else if (filter === "author") {
-        return a.author.name.localeCompare(b.author.name);
-      }
-      return 0;
-    });
+    .filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <>
@@ -87,14 +72,11 @@ function App() {
       </div>
 
       {/* Filter Buttons */}
-      <div className="filter-buttons">
+      <div className="filter-buttons" style={{ display: 'none' }}>
         <button onClick={() => setFilter("genre")}>Genre</button>
         <button onClick={() => setFilter("year")}>Year</button>
         <button onClick={() => setFilter("author")}>Author</button>
       </div>
-
-      {/* Use the CSVReader component to load the CSV file */}
-      <CSVReader setBooks={setBooks} />
 
       {/* Book List Component */}
       <BookList books={filteredBooks} updateBook={openEditModal} updateCallback={onUpdate} />

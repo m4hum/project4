@@ -51,30 +51,6 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Filter Buttons Styles */
-.filter-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.filter-buttons button {
-  background-color: var(--primary-color);
-  color: #fff;
-  padding: 10px;
-  font-size: 14px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s ease-in-out;
-}
-
-.filter-buttons button:hover {
-  background-color: var(--hover-color);
-  transform: scale(1.1);
-}
-
 /* Header */
 h1, h2 {
   color: var(--accent-color);
