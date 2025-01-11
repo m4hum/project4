@@ -20,6 +20,17 @@ const BookList = ({ books, updateBook, updateCallback }) => {
     }
   };
 
+  const getCounts = (key) => {
+    return books.reduce((acc, book) => {
+      acc[book[key]] = (acc[book[key]] || 0) + 1;
+      return acc;
+    }, {});
+  };
+
+  const authorCounts = getCounts("author");
+  const genreCounts = getCounts("genre");
+  const yearCounts = getCounts("yearPublished");
+
   return (
     <div>
       <h2>Books</h2>
@@ -52,6 +63,66 @@ const BookList = ({ books, updateBook, updateCallback }) => {
           ))}
         </tbody>
       </table>
+
+      <div style={{ marginTop: "20px" }}>
+        <h3>Books by Author</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Author</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(authorCounts).map(([author, count]) => (
+              <tr key={author}>
+                <td>{author}</td>
+                <td>{count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div style={{ marginTop: "20px" }}>
+        <h3>Books by Genre</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Genre</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(genreCounts).map(([genre, count]) => (
+              <tr key={genre}>
+                <td>{genre}</td>
+                <td>{count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div style={{ marginTop: "20px" }}>
+        <h3>Books by Year Published</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(yearCounts).map(([year, count]) => (
+              <tr key={year}>
+                <td>{year}</td>
+                <td>{count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
