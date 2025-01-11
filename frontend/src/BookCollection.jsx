@@ -9,6 +9,9 @@ function BookCollection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+  const [authorFilter, setAuthorFilter] = useState(null);
+  const [genreFilter, setGenreFilter] = useState(null);
+  const [yearFilter, setYearFilter] = useState(null);
 
   useEffect(() => {
     fetchBooks();
@@ -56,8 +59,21 @@ function BookCollection() {
     fetchBooks();
   };
 
-  const filteredBooks = books
-    .filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  const getUniqueValues = (key) => {
+    return [...new Set(books.map(book => book[key]))];
+  };
+
+  const applyFilters = (books) => {
+    return books.filter(book => {
+      return (!authorFilter || book.author === authorFilter) &&
+             (!genreFilter || book.genre === genreFilter) &&
+             (!yearFilter || book.yearPublished === yearFilter);
+    });
+  };
+
+  const filteredBooks = applyFilters(
+    books.filter(book => book.title.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   const getChartData = (key) => {
     const data = books.reduce((acc, book) => {
@@ -87,6 +103,52 @@ function BookCollection() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+      </div>
+
+      {/* Filter Buttons */}
+      <div className="filter-buttons">
+        <div className="filter-group">
+          <button className="filter-button">Filter by Author</button>
+          <div className="filter-options">
+            {getUniqueValues('author').map(author => (
+              <button
+                key={author}
+                className={`filter-option ${authorFilter === author ? 'active' : ''}`}
+                onClick={() => setAuthorFilter(authorFilter === author ? null : author)}
+              >
+                {author}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="filter-group">
+          <button className="filter-button">Filter by Genre</button>
+          <div className="filter-options">
+            {getUniqueValues('genre').map(genre => (
+              <button
+                key={genre}
+                className={`filter-option ${genreFilter === genre ? 'active' : ''}`}
+                onClick={() => setGenreFilter(genreFilter === genre ? null : genre)}
+              >
+                {genre}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="filter-group">
+          <button className="filter-button">Filter by Year Published</button>
+          <div className="filter-options">
+            {getUniqueValues('yearPublished').map(year => (
+              <button
+                key={year}
+                className={`filter-option ${yearFilter === year ? 'active' : ''}`}
+                onClick={() => setYearFilter(yearFilter === year ? null : year)}
+              >
+                {year}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Book List Component */}
