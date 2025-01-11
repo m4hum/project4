@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import BookList from "./BookList";
-import BookForm from "./BookForm";
 import BookCollection from "./BookCollection";
-import Dashboard from "./Dashboard"; 
 import './Style.css';
 
 function App() {
@@ -17,19 +14,11 @@ function App() {
             <BookCollection />
           </>
         );
-      case "dashboard":
-        return (
-          <>
-            <button className="back-button" onClick={() => setPage("main")}>Back</button>
-            <Dashboard />
-          </>
-        );
       default:
         return (
           <div className="main-page">
             <h1>Welcome</h1>
             <button onClick={() => setPage("bookCollection")}>Book Collection</button>
-            <button onClick={() => setPage("dashboard")}>Dashboard</button>
           </div>
         );
     }
