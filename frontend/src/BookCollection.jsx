@@ -87,7 +87,12 @@ function BookCollection() {
         data: Object.values(data),
         backgroundColor: 'rgba(255, 215, 0, 0.2)', // Gold
         borderColor: 'rgba(255, 215, 0, 1)', // Gold
-        borderWidth: 1
+        borderWidth: 1,
+        font: {
+          size: 16, // Increase font size for better clarity
+          family: 'Roboto', // Use a clear font
+          weight: 'bold'
+        }
       }]
     };
   };

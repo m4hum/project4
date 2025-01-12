@@ -285,4 +285,5 @@ search-bar input:focus {
   color: var(--text-color);
   opacity: 0.8;
   margin: 40px 0 20px 0; /* Add spacing above and below the titles */
+  text-rendering: optimizeLegibility; /* Improve text clarity */
 }
