@@ -1,12 +1,12 @@
 /* Root Variables for Consistent Styling */
 :root {
-  --primary-color: #d4a373; /* Warm light color */
-  --secondary-color: #8b5e3c; /* Darker warm color */
-  --background-color: #2c2c2c; /* Dark background */
-  --card-background: #3e3e3e; /* Slightly lighter dark background */
-  --text-color: #e0e0e0; /* Light text color */
-  --accent-color: #ffb74d; /* Warm accent color */
-  --hover-color: #ff8a65; /* Hover color */
+  --primary-color: #FFD700; /* Gold */
+  --secondary-color: #FF8C00; /* Dark orange */
+  --background-color: #FFFACD; /* Lemon chiffon */
+  --card-background: #FFFFFF; /* White card background */
+  --text-color: #333333; /* Dark text color */
+  --accent-color: #FFA500; /* Orange */
+  --hover-color: #FF4500; /* Orange red */
   --font-family: 'Roboto', sans-serif;
 }
 

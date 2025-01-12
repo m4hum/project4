@@ -85,8 +85,8 @@ function BookCollection() {
       datasets: [{
         label: `Number of Books by ${key}`,
         data: Object.values(data),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(255, 215, 0, 0.2)', // Gold
+        borderColor: 'rgba(255, 215, 0, 1)', // Gold
         borderWidth: 1
       }]
     };

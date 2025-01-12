@@ -17,17 +17,16 @@ function App() {
       default:
         return (
           <div className="main-page">
-            <h1>Welcome</h1>
+            <h1 style={{ fontSize: '3em', color: '#FFFACD', textShadow: '2px 2px 4px #000000' }}>Welcome</h1> {/* Lemon chiffon with black outline */}
             <iframe 
-              src="https://giphy.com/embed/Y0ynz2rzJh2Dkxlelp" 
+              src="https://giphy.com/embed/9X6OGGZ2SNyQ8" 
               width="100%" 
               height="100%" 
-              style={{ position: 'absolute', top: 0, left: 0, zIndex: -2, opacity: 1 }} 
-              frameBorder="0" 
+              style={{ position: 'absolute', top: 0, left: 0, zIndex: -2, opacity: 1, border: 'none' }} 
               className="giphy-embed" 
               allowFullScreen
             ></iframe>
-            <button onClick={() => setPage("bookCollection")}>Book Collection</button>
+            <button style={{ fontSize: '1.5em', padding: '15px 30px' }} onClick={() => setPage("bookCollection")}>Book Collection</button>
           </div>
         );
     }
