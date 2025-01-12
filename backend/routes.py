@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from extensions import db
-from models import Book
-import csv
+from models import Book, Author, Genre
 
 book_routes = Blueprint("book_routes", __name__)
 
@@ -13,38 +12,38 @@ def get_books():
 
 @book_routes.route("/api/books", methods=["POST"])
 def create_book():
-    # Extract fields from the request JSON payload
     title = request.json.get("title")
-    author = request.json.get("author")
-    genre = request.json.get("genre")
+    author_name = request.json.get("author")
+    genre_name = request.json.get("genre")
     description = request.json.get("description")
     year_published = request.json.get("yearPublished")
 
-    # Check for required fields
-    if not title or not author or not genre or not description or not year_published:
-        return (
-            jsonify(
-                {
-                    "message": "You must include a title, author, genre, description, and year_published"
-                }
-            ),
-            400,
-        )
+    if not title or not author_name or not genre_name or not description or not year_published:
+        return jsonify({"message": "You must include a title, author, genre, description, and year_published"}), 400
 
-    # Create a new Book object
+    author = Author.query.filter_by(name=author_name).first()
+    if not author:
+        author = Author(name=author_name)
+        db.session.add(author)
+        db.session.commit()
+
+    genre = Genre.query.filter_by(name=genre_name).first()
+    if not genre:
+        genre = Genre(name=genre_name)
+        db.session.add(genre)
+        db.session.commit()
+
     new_book = Book(
         title=title,
-        author=author,
-        genre=genre,
-        description=description,
+        author=author_name,
+        genre=genre_name,
         year_published=year_published,
+        description=description,
     )
     try:
-        # Add the new book to the database
         db.session.add(new_book)
         db.session.commit()
     except Exception as e:
-        # Handle any database errors
         db.session.rollback()
         return jsonify({"message": str(e)}), 400
 
@@ -67,10 +66,26 @@ def update_book(id):
     data = request.json
 
     book.title = data.get("title", book.title)
-    book.author = data.get("author", book.author)
+    author_name = data.get("author")
+    genre_name = data.get("genre")
     book.description = data.get("description", book.description)
-    book.genre = data.get("genre", book.genre)
     book.year_published = data.get("yearPublished", book.year_published)
+
+    if author_name:
+        author = Author.query.filter_by(name=author_name).first()
+        if not author:
+            author = Author(name=author_name)
+            db.session.add(author)
+            db.session.commit()
+        book.author = author.name
+
+    if genre_name:
+        genre = Genre.query.filter_by(name=genre_name).first()
+        if not genre:
+            genre = Genre(name=genre_name)
+            db.session.add(genre)
+            db.session.commit()
+        book.genre = genre.name
 
     try:
         db.session.commit()

@@ -22,14 +22,16 @@ function BookCollection() {
       const response = await fetch("http://127.0.0.1:5000/api/books");
       if (response.ok) {
         const data = await response.json();
+        console.log("Fetched books data:", data); // Debug log
         const books = data.books.map(book => ({
           id: book.id,
           title: book.title,
           author: book.author,
-          genre: book.genre,
+          genre: book.genre, 
           yearPublished: book.yearPublished,
           description: book.description
         }));
+        console.log("Processed books data:", books); // Debug log
         setBooks(books);
       } else {
         console.error("Failed to fetch books");
