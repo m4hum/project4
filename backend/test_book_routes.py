@@ -31,6 +31,9 @@ def client(app):
 
 def test_get_books_empty(client):
     """Test GET /api/books with no books in the database."""
+    # Send a GET request to the /api/books endpoint
+    # Assert that the response status code is 200 (OK)
+    # Assert that the returned data contains an empty list of books
     response = client.get("/api/books")
     assert response.status_code == 200
     data = response.get_json()
@@ -39,6 +42,12 @@ def test_get_books_empty(client):
 
 def test_create_book(client):
     """Test POST /api/books to create a new book."""
+    # Define the payload for the new book
+    # Send a POST request to the /api/books endpoint with the payload
+    # Assert that the response status code is 201 (Created)
+    # Assert that the response message indicates successful creation
+    # Verify that the book is added to the database by sending a GET request
+    # Assert that the book details match the payload
     payload = {
         "title": "Test Book",
         "author": "Test Author",
@@ -62,6 +71,10 @@ def test_create_book(client):
 
 def test_create_book_missing_fields(client):
     """Test POST /api/books with missing required fields."""
+    # Define the payload with missing fields
+    # Send a POST request to the /api/books endpoint with the payload
+    # Assert that the response status code is 400 (Bad Request)
+    # Assert that the response message indicates missing required fields
     payload = {
         "title": "Test Book",
         "author": "Test Author",
@@ -76,6 +89,11 @@ def test_create_book_missing_fields(client):
 def test_delete_book(client):
     """Test DELETE /api/books/<id>."""
     # Create a book to delete
+    # Add the book to the database
+    # Send a DELETE request to the /api/books/<id> endpoint
+    # Assert that the response status code is 200 (OK)
+    # Assert that the response message indicates successful deletion
+    # Verify that the book no longer exists in the database by sending a GET request
     book = Book(
         title="Book to Delete",
         author="Author",
@@ -101,6 +119,11 @@ def test_delete_book(client):
 def test_update_book(client):
     """Test PATCH /api/books/<id>."""
     # Create a book to update
+    # Add the book to the database
+    # Define the payload with updated book details
+    # Send a PATCH request to the /api/books/<id> endpoint with the payload
+    # Assert that the response status code is 200 (OK)
+    # Assert that the updated book details match the payload
     book = Book(
         title="Original Title",
         author="Original Author",
@@ -132,6 +155,11 @@ def test_update_book(client):
 def test_update_book_partial_fields(client):
     """Test PATCH /api/books/<id> with partial data."""
     # Create a book to update
+    # Add the book to the database
+    # Define the payload with partial book details
+    # Send a PATCH request to the /api/books/<id> endpoint with the payload
+    # Assert that the response status code is 200 (OK)
+    # Assert that the updated book details match the payload and unchanged fields remain the same
     book = Book(
         title="Original Title",
         author="Original Author",
