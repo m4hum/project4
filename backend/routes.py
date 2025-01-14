@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from extensions import db
-from models import Book, Author, Genre
+from models import Book, Author, Genre, YearPublished
 
 book_routes = Blueprint("book_routes", __name__)
 
@@ -16,9 +16,9 @@ def create_book():
     author_name = request.json.get("author")
     genre_name = request.json.get("genre")
     description = request.json.get("description")
-    year_published = request.json.get("yearPublished")
+    year_published_value = request.json.get("yearPublished")
 
-    if not title or not author_name or not genre_name or not description or not year_published:
+    if not title or not author_name or not genre_name or not description or not year_published_value:
         return jsonify({"message": "You must include a title, author, genre, description, and year_published"}), 400
 
     author = Author.query.filter_by(name=author_name).first()
@@ -33,11 +33,17 @@ def create_book():
         db.session.add(genre)
         db.session.commit()
 
+    year_published = YearPublished.query.filter_by(year=year_published_value).first()
+    if not year_published:
+        year_published = YearPublished(year=year_published_value)
+        db.session.add(year_published)
+        db.session.commit()
+
     new_book = Book(
         title=title,
         author=author_name,
         genre=genre_name,
-        year_published=year_published,
+        year_published=year_published_value,
         description=description,
     )
     try:
@@ -69,7 +75,7 @@ def update_book(id):
     author_name = data.get("author")
     genre_name = data.get("genre")
     book.description = data.get("description", book.description)
-    book.year_published = data.get("yearPublished", book.year_published)
+    year_published_value = data.get("yearPublished", book.year_published)
 
     if author_name:
         author = Author.query.filter_by(name=author_name).first()
@@ -86,6 +92,14 @@ def update_book(id):
             db.session.add(genre)
             db.session.commit()
         book.genre = genre.name
+
+    if year_published_value:
+        year_published = YearPublished.query.filter_by(year=year_published_value).first()
+        if not year_published:
+            year_published = YearPublished(year=year_published_value)
+            db.session.add(year_published)
+            db.session.commit()
+        book.year_published = year_published.year
 
     try:
         db.session.commit()

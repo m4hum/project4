@@ -30,12 +30,27 @@ class Genre(db.Model):
             'books': [book.to_json() for book in self.books]
         }
 
+class YearPublished(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.Integer, nullable=False)
+    books = db.relationship('Book', backref='book_year_published', lazy=True)
+
+    def __init__(self, year):
+        self.year = year
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'year': self.year,
+            'books': [book.to_json() for book in self.books]
+        }
+
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    author = db.Column(db.String(100), db.ForeignKey('author.name'), nullable=False)  # Foreign key to Author
-    genre = db.Column(db.String(100), db.ForeignKey('genre.name'), nullable=False)  # Foreign key to Genre
-    year_published = db.Column(db.Integer, nullable=False)
+    author = db.Column(db.String(100), db.ForeignKey('author.name'), nullable=False)
+    genre = db.Column(db.String(100), db.ForeignKey('genre.name'), nullable=False)
+    year_published = db.Column(db.Integer, db.ForeignKey('year_published.year'), nullable=False)
     description = db.Column(db.String(500), nullable=False)
 
     def __init__(self, title, author, genre, year_published, description):
